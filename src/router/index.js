@@ -6,6 +6,8 @@ import AboutUs from '@/components/AboutUs'
 import ContactUs from '@/components/ContactUs'
 import Pizzas from '@/components/Pizzas'
 import Edit from '@/components/Edit'
+import SignUp from '@/components/SignUp'
+import Login from '@/components/Login'
 
 
 Vue.use(Router)
@@ -42,6 +44,16 @@ export default new Router({
       name: 'Edit',
       component: Edit,
       props: true
-    }
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp
+    },
   ]
 })

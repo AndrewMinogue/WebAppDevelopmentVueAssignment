@@ -27,13 +27,14 @@
         columns: ['_id', 'paymenttype', 'deal', 'price','discountcode','rating','upvote','remove','edit'],
         options: {
           sortable: ['upvotes'],
+          firtable:[],
           perPage: 10,
           headings: {
             _id: 'ID',
             paymenttype: 'Payment Type',
             price: 'Price',
             discountcode: 'Discount Code',
-            rating: 'Rating',
+            rating: 'rating',
           }
         }
       }
@@ -65,7 +66,7 @@
             console.log(error)
           })
       },
-      //
+
       deleteOrder: function (id) {
         this.$swal({
           title: 'Are you sure?',
@@ -86,7 +87,8 @@
                 console.log(this.message)
                 this.loadPizzas()
                  Vue.nextTick(() => this.$refs.vuetable.refresh())
-                this.$swal('Deleted', 'Poof! Order Deleted ' + JSON.stringify(response.data, null, 5), 'success')
+                this.$swal('Deleted', 'Poof! Order Deleted ' , 'success')
+                console.log('Swal Result : ' + result.value)
               })
               .catch(error => {
                 this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
@@ -116,3 +118,4 @@
     cursor: pointer;
   }
 </style>
+

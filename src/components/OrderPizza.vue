@@ -155,7 +155,6 @@
         margin-top: 30px;
         text-align: center;
         font-size: 45pt;
-        margin-bottom: 10px;
         color: #000000;
       }
       .hero {
@@ -198,7 +197,7 @@
       }
 
       input {
-        border: 1px solid silver;
+        border: 1px solid black;
         border-radius: 4px;
         background: white;
         padding: 5px 10px;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="background">
     <b-navbar toggleable="md" variant="info" type="dark">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <img src="./assets/pizzacake.jpg" class="img-circle" height="50px" width="50px" style="padding: 5px">
@@ -15,7 +15,7 @@
           <b-nav-item to="/AboutUs"><i class="fa fa-info" style="padding: 5px; color: white;"> About Us</i></b-nav-item>
           <b-nav-item to="/ContactUs"><i class="fa fa-comment" style="padding: 5px; color: white;"> Contact Us</i></b-nav-item>
           <b-nav-item to="/Login"><i class="fa fa-sign-in" style="padding: 5px; color: white;"> Login</i></b-nav-item>
-          <b-nav-item to="/Logout"><i class="fa fa-sign-out" style="padding: 5px; color: white;" > Logout</i></b-nav-item>
+          <b-nav-item to="/SignUp"><i class="fa fa-sign-out" style="padding: 5px; color: white;" > SignUp</i></b-nav-item>
           <i class="fa fa-pied-piper-alt fa-1x" style="padding: 5px; color: white;"></i>
         </b-navbar-nav>
       </b-collapse>
@@ -31,6 +31,7 @@
 </script>
 
 <style>
+
   #app {
     font-family: "Times New Roman", Times, serif;
     -webkit-font-smoothing: antialiased;
