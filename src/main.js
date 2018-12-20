@@ -23,7 +23,7 @@ new Vue({
   },
   created(){
     firebase.initializeApp({
-      apiKey: 'AIzaSyAX4541LdC5MrXi8Rg6FWJ_FGxqmLFZv4w',
+      apiKey: '',
       authDomain: 'vueassingment2.firebaseapp.com',
       databaseURL: 'https://vueassingment2.firebaseio.com',
       projectId: 'vueassingment2',
