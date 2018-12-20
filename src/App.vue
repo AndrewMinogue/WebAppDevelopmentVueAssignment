@@ -5,7 +5,7 @@
       <img src="./assets/pizzacake.jpg" class="img-circle" height="50px" width="50px" style="padding: 5px">
       <b-navbar-brand to="/">Pizza Party</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
-        <b-navbar-nav>
+        <b-navbar-nav >
           <b-nav-item to="/#"><i class="fa fa-home" style="padding: 5px; color: white;"> Home</i></b-nav-item>
           <b-nav-item to="/OrderPizza"><i class="fa fa-list" style="padding: 5px; color: white;"> Make Orders</i></b-nav-item>
           <b-nav-item to="/Pizzas"><i class="fa fa-money" style="padding: 5px; color: white;"> List of Orders</i></b-nav-item>
@@ -26,7 +26,32 @@
 
 <script>
   export default {
-    name: 'App'
+    data () {
+      return {
+        sideNav: false
+      }
+    },
+    computed: {
+      menuItems () {
+        let menuItems = [
+            {class: 'face', title: 'Sign up', link: '/SignUp'},
+            {class: 'lock_open', title: 'Sign in', link: '/Login'},
+            {class: 'fa fa-info', title: 'About Us', link: '/AboutUs'},
+            {class: 'fa fa-comment', title: 'Contact Us', link: '/ContactUs'},
+        ]
+        if (this.userIsAuthenticated) {
+          menuItems = [
+            {class: 'supervisor_account', title: 'View Meetups', link: '/OrderPizza'},
+            {class: 'room', title: 'Organize Meetup', link: '/Pizzas'},
+            {class: 'person', title: 'Profile', link: '/Mapx'}
+          ]
+        }
+        return menuItems
+      },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    }
   }
 </script>
 
@@ -42,3 +67,4 @@
     margin-top: 0px;
   }
 </style>
+

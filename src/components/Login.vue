@@ -1,46 +1,11 @@
 <template>
-  <div class="hero">
-  <v-container>
-    <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
-        <v-card>
-          <v-card-text>
-            <v-container>
-              <form @submit.prevent="onSignin">
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="email"
-                      label="Email"
-                      id="email"
-                      v-model="email"
-                      type="email"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="password"
-                      label="Password"
-                      id="password"
-                      v-model="password"
-                      type="password"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-btn type="submit">Sign in</v-btn>
-                  </v-flex>
-                </v-layout>
-              </form>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <div id="app1" class="hero">
+    <h3 class="vue-title"><i class="fa fa-sign-in" style="padding: 3px"></i>{{messagetitle}}</h3><br/><br/>
+    <input type="text"  id="email" name="email" placeholder="Enter Email" v-model="email"/><br/>
+    <br/>
+    <input type="password" id="password" name="password" placeholder="Enter Password" v-model="password"/><br/>
+    <br/>
+    <button @click="onSignin">Sign In</button>
   </div>
 </template>
 
@@ -49,6 +14,7 @@
   export default {
     data () {
       return {
+        messagetitle:'Sign In',
         email: '',
         password: ''
       }
@@ -67,7 +33,11 @@
     },
     methods: {
       onSignin () {
-        this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+          this.$store.dispatch('signUserIn', {email: this.email, password: this.password}).then(() => {
+            this.$swal('Success', ' Sign In Successful ', 'success')
+          }).catch(() => {
+                this.$swal('ERROR', 'Invalid Credentials' + 'error')
+              })
       }
     }
   }
@@ -75,7 +45,57 @@
 
 
 <style>
-  .hero{
-    align-content: center;
+  .vue-title {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 45pt;
+    color: #000000;
   }
+  .hero {
+    height: 100vh;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #000000;
+  }
+  #app1 {
+    width: 95%;
+    margin: 0 auto;
+  }
+  .required-field > label::after {
+    content: '*';
+    color: red;
+    margin-left: 0.25rem;
+  }
+  .donate-form .form-control-label.text-left{
+    text-align: left;
+  }
+
+  label {
+    display: inline-block;
+    width: 540px;
+    text-align: left;
+    font-size: x-large;
+  }
+  .typo__p {
+    width: 540px;
+    font-size: x-large;
+  }
+  .btn1 {
+    width: 300px;
+    font-size: x-large;
+  }
+  p {
+    margin-top: 20px;
+  }
+
+  input {
+    border: 1px solid black;
+    border-radius: 4px;
+    background: white;
+    padding: 5px 10px;
+    width: 400px;
+  }
+
 </style>

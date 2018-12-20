@@ -8,7 +8,7 @@
   <form @submit.prevent="submit">
     <div class="form-group">
       <label class="form-label">Select Payment Type</label>
-      <select id="paymenttype" name="paymenttype" class="form-control" type="text" v-model="paymenttype">
+      <select type="text" v-model="paymenttype">
         <option value="null" selected disabled hidden>Choose Payment Type</option>
         <option value="Direct">Direct</option>
         <option value="PayPal">PayPal</option>
@@ -47,7 +47,7 @@
           <button class="btn btn-primary btn1" id = 'submit' type="submit" :disabled="submitStatus === 'PENDING'">Place Order</button>
         </p>
         <p class="typo__p" v-if="submitStatus === 'OK'">Thanks for your Order!</p>
-        <p class="typo__p" v-if="submitStatus === 'ERROR'">Please Fill in the Form Correctly.</p>
+        <p class="typo__p" v-if="submitStatus === 'ERROR'">Error Complete Form / Or Not Logged in!</p>
         <p class="typo__p" v-if="submitStatus === 'PENDING'">Completing Order...</p>
       </form>
         </div>
@@ -62,6 +62,7 @@
       import Vuelidate from 'vuelidate'
       import VueForm from 'vueform'
       import listpizzas from "../services/listpizzas";
+      import * as firebase from 'firebase';
       import { required, minLength, maxLength, between } from 'vuelidate/lib/validators';
 
 
@@ -111,38 +112,49 @@
               maxLength: maxLength(1)
             },
           },
+        // computed: {
+        //   user () {
+        //     return this.$store.getters.user
+        //   }
+        // },
         methods: {
-          submit () {
-            console.log('submit!')
-            this.$v.$touch()
-            if (this.$v.$invalid) {
-              this.submitStatus = 'ERROR'
-            } else {
-              // do your submit logic here
-              this.submitStatus = 'PENDING'
-              setTimeout(() => {
-                this.submitStatus = 'OK'
-                var pizzas = {
-                  paymenttype: this.paymenttype,
-                  deal: this.deal,
-                  price: this.price,
-                  discountcode: this.discountcode,
-                  rating: this.rating
-                }
-                this.pizzas = pizzas
-                this.submitPizza(this.pizzas)
-              }, 500)
+          submit() {
+            var user = firebase.auth().currentUser;
+            if (user) {
+              console.log('submit!')
+              this.$v.$touch()
+              if (this.$v.$invalid) {
+                this.submitStatus = 'ERROR'
+              } else {
+                // do your submit logic here
+                this.submitStatus = 'PENDING'
+                setTimeout(() => {
+                  this.submitStatus = 'OK'
+                  var pizzas = {
+                    paymenttype: this.paymenttype,
+                    deal: this.deal,
+                    price: this.price,
+                    discountcode: this.discountcode,
+                    rating: this.rating
+                  }
+                  this.pizzas = pizzas
+                  this.submitPizza(this.pizzas)
+                }, 500)
+              }
+            }else{
+              'You need to be logged in to complete this action'
             }
           },
-              submitPizza: function (pizzas) {
-                listpizzas.postPizza(pizzas)
-                  .then(response => {
-                    console.log(response)
-                  })
-                  .catch(error => {
-                    this.errors.push(error)
-                    console.log(error)
-                  })
+          submitPizza: function (pizzas) {
+
+              listpizzas.postPizza(pizzas)
+                .then(response => {
+                  console.log(response)
+                })
+                .catch(error => {
+                  this.errors.push(error)
+                  console.log(error)
+                })
           }
         }
       }

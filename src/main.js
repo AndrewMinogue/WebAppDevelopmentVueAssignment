@@ -13,8 +13,6 @@ Vue.use(VueSweetAlert2)
 Vue.use(BootstrapVue)
 Vue.use(Vuetify)
 
-
-
 Vue.config.productionTip = false
 
 new Vue({

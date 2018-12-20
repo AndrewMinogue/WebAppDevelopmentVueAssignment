@@ -68,37 +68,42 @@
       },
 
       deleteOrder: function (id) {
-        this.$swal({
-          title: 'Are you sure?',
-          text: 'You can\'t Undo this action',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Delete',
-          cancelButtonText: 'Cancel',
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        }).then((result) => {
-          console.log('SWAL Result : ' + result.value)
-          if (result.value === true) {
-            listpizzas.deleteOrder(id)
-              .then(response => {
-                // JSON responses are automatically parsed.
-                this.message = response.data
-                console.log(this.message)
-                this.loadPizzas()
-                 Vue.nextTick(() => this.$refs.vuetable.refresh())
-                this.$swal('Deleted', 'Poof! Order Deleted ' , 'success')
-                console.log('Swal Result : ' + result.value)
-              })
-              .catch(error => {
-                this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
-                this.errors.push(error)
-                console.log(error)
-              })
-          } else {
-            this.$swal('Cancelled', 'Your Pizza lives another day!', 'info')
-          }
-        })
+        var user = firebase.auth().currentUser;
+        if (user) {
+          this.$swal({
+            title: 'Are you sure?',
+            text: 'You can\'t Undo this action',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          }).then((result) => {
+            console.log('SWAL Result : ' + result.value)
+            if (result.value === true) {
+              listpizzas.deleteOrder(id)
+                .then(response => {
+                  // JSON responses are automatically parsed.
+                  this.message = response.data
+                  console.log(this.message)
+                  this.loadPizzas()
+                  Vue.nextTick(() => this.$refs.vuetable.refresh())
+                  this.$swal('Deleted', 'Poof! Order Deleted ', 'success')
+                  console.log('Swal Result : ' + result.value)
+                })
+                .catch(error => {
+                  this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
+                  this.errors.push(error)
+                  console.log(error)
+                })
+            } else {
+              this.$swal('Cancelled', 'Your Pizza lives another day!', 'info')
+            }
+          })
+        }else{
+
+        }
       },
       editOrder: function (id) {
         this.$router.params = id
