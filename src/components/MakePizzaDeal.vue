@@ -8,11 +8,11 @@
           <form @submit.prevent="submit">
             <div class="form-group">
               <label class="form-label">Please Enter a deal name</label>
-              <input class="form__input" id="deals" name="deals" v-model="deals"/>
+              <input class="form__input" id="dealpizza" name="dealpizza" v-model="dealpizza"/>
             </div>
             <div class="form-group">
-              <label class="form-label">Pick a Pizza type</label>
-              <select type="text" v-model="pizza">
+              <label class="form-label" style="width:540px">Pick a Pizza type</label>
+              <select type="text" class="form-control" v-model="pizza">
                 <option value="null" selected disabled hidden>Pick A Pizza Type</option>
                 <option value="Pepperoni">Pepperoni</option>
                 <option value="MeatLover">MeatLover</option>
@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">Please pick a drink!</label>
-              <select type="text" v-model="drink">
+              <select type="text" class="form-control"  v-model="drink">
                 <option value="null" selected disabled hidden>Pick A Pizza Type</option>
                 <option value="Coke">Coke</option>
                 <option value="7up">7up</option>
@@ -75,7 +75,7 @@
   import Vue from 'vue'
   import Vuelidate from 'vuelidate'
   import VueForm from 'vueform'
-  import pizzadeals from "../services/pizzadeals";
+  import dealpizza from "../services/dealpizza";
   import * as firebase from 'firebase';
   import { required, minLength, maxLength, between } from 'vuelidate/lib/validators';
 
@@ -94,18 +94,18 @@
     data () {
       return {
         messagetitle: ' Create your own pizza deal ',
-        deals: '',
+        dealpizza: '',
         pizza: '',
         side: '',
         drink:'',
         price:0,
         submitStatus: null,
         rating: 0,
-        pizzadeals: {},
+        pizzadeal: {},
       }
     },
     validations: {
-      deals:
+      dealpizza:
         {
           required,
           minLength: minLength(4)
@@ -145,16 +145,16 @@
             this.submitStatus = 'PENDING'
             setTimeout(() => {
               this.submitStatus = 'OK'
-              var pizzadeals = {
-                deals: this.deals,
+              var pizzadeal = {
+                dealpizza: this.dealpizza,
                 side: this.side,
                 price: this.price,
                 drink: this.drink,
                 pizza: this.pizza,
                 rating: this.rating
               }
-              this.pizzadeals = pizzadeals
-              this.submitPizzaDeal(this.pizzadeals)
+              this.pizzadeal = dealpizza
+              this.submitPizzaDeal(this.pizzadeal)
             }, 500)
           }
         }else{
@@ -163,7 +163,7 @@
       },
       submitPizzaDeal: function (pizzadeal) {
 
-        pizzadeals.postPizzaDeal(pizzadeal)
+        dealpizza.postPizzaDeal(pizzadeal)
           .then(response => {
             console.log(response)
           })
@@ -179,18 +179,19 @@
 
 
 <style scoped>
+  .hero {
+    height: 100vh;
+    margin-top: 0px;
+    margin-left: 0px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #000;
+  }
   .vue-title {
     margin-top: 30px;
     text-align: center;
     font-size: 45pt;
-    color: #000000;
-  }
-  .hero {
-    height: 100vh;
-    margin-top: 30px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     color: #000000;
   }
   #app1 {

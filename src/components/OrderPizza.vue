@@ -8,7 +8,7 @@
   <form @submit.prevent="submit">
     <div class="form-group">
       <label class="form-label">Select Payment Type</label>
-      <select type="text" v-model="paymenttype">
+      <select type="text" class="form-control" v-model="paymenttype">
         <option value="null" selected disabled hidden>Choose Payment Type</option>
         <option value="Direct">Direct</option>
         <option value="PayPal">PayPal</option>
@@ -163,6 +163,7 @@
 
 
     <style scoped>
+
       .vue-title {
         margin-top: 30px;
         text-align: center;

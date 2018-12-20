@@ -4,7 +4,6 @@
     <div class="container mt-3 mt-sm-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
-
           <form @submit.prevent="submit">
             <div class="form-group">
               <label class="form-label">Please Enter a deal name</label>
@@ -12,7 +11,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">Pick a Pizza type</label>
-              <select type="text" v-model="pizza">
+              <select type="text"  class="form-control"  v-model="pizza">
                 <option value="null" selected disabled hidden>Pick A Pizza Type</option>
                 <option value="Pepperoni">Pepperoni</option>
                 <option value="MeatLover">MeatLover</option>
@@ -24,11 +23,11 @@
             </div>
             <div class="form-group">
               <label class="form-label">What Side would you Like?</label>
-              <input class="form__input" id="deal" name="deal" v-model="deal"/>
+              <input class="form__input" id="side" name="side" v-model="side"/>
             </div>
             <div class="form-group">
               <label class="form-label">Please pick a drink!</label>
-              <select type="text" v-model="drink">
+              <select type="text"  class="form-control"  v-model="drink">
                 <option value="null" selected disabled hidden>Pick A Pizza Type</option>
                 <option value="Coke">Coke</option>
                 <option value="7up">7up</option>
@@ -88,27 +87,26 @@
 
   export default {
     name: 'MakePizzaDeal',
-    props: ['pizzaDealTitle','pizzadeals'],
+    props: ['pizzaDealTitle','pizzadeal'],
     data () {
       return {
         messagetitle: ' Place An Order ',
-        deals: this.pizzadeals.deals,
-        pizza: this.pizzadeals.pizza,
-        side: this.pizzadeals.side,
-        drink:this.pizzadeals.drink,
-        price:this.pizzadeals.price,
+        deals: this.pizzadeal.deals,
+        pizza: this.pizzadeal.pizza,
+        side: this.pizzadeal.side,
+        drink:this.pizzadeal.drink,
+        price:this.pizzadeal.price,
         submitStatus: null,
         rating: 0,
-        pizzas: {},
+        pizzadeal: {},
       }
     },
     validations: {
-      deals:
-        {
+      deals:{
           required,
           minLength: minLength(4)
         },
-      pizza: {
+      pizza:{
         required,
         maxLength: maxLength(20)
       },
@@ -139,17 +137,17 @@
           this.submitStatus = 'PENDING'
           setTimeout(() => {
             this.submitStatus = 'OK'
-            var pizzadeals = {
-              deals: this.pizzadeals.deals,
-              pizza: this.pizzadeals.pizza,
-              side: this.pizzadeals.side,
-              drink:this.pizzadeals.drink,
-              price:this.pizzadeals.price,
+            var pizzadeal = {
+              deals: this.deals,
+              pizza: this.pizza,
+              side: this.side,
+              drink:this.drink,
+              price:this.price,
             }
-            this.pizzas = pizzas;
-            console.log('Submitting in OrderForm : ' +
-              JSON.stringify(this.pizzas, null, 5))
-            this.$emit('order-is-created-updated', this.pizzas)
+            this.pizzadeal = pizzadeal;
+            console.log('Submitting in PizzaDealForm : ' +
+              JSON.stringify(this.pizzadeal, null, 5))
+            this.$emit('pizzadeal-is-created-updated', this.pizzadeal)
           }, 500)
         }
       },
@@ -161,14 +159,14 @@
 
 <style scoped>
   .vue-title {
-    margin-top: 30px;
+    margin-top: 10px;
     text-align: center;
     font-size: 45pt;
     margin-bottom: 10px;
   }
   #app1 {
     width: 95%;
-    margin: 0 auto;
+    margin-top: 10px;
   }
   .required-field > label::after {
     content: '*';

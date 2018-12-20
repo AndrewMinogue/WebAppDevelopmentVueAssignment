@@ -6,6 +6,7 @@ import AboutUs from '@/components/AboutUs'
 import ContactUs from '@/components/ContactUs'
 import Pizzas from '@/components/Pizzas'
 import Edit from '@/components/Edit'
+import EditDeal from '@/components/EditDeal'
 import SignUp from '@/components/SignUp'
 import Login from '@/components/Login'
 import MakePizzaDeal from '@/components/MakePizzaDeal'
@@ -44,6 +45,12 @@ export default new Router({
       path: '/edit',
       name: 'Edit',
       component: Edit,
+      props: true
+    },
+    {
+      path: '/editdeal',
+      name: 'EditDeal',
+      component: EditDeal,
       props: true
     },
     {

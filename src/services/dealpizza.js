@@ -16,10 +16,10 @@ export default {
   deletePizzaDeal (id) {
     return Api().delete(`/pizzadeal/${id}`)
   },
-  putOrder (id, pizzadeals) {
-    console.log('REQUESTING ' + pizzadeals._id + ' ' +
-      JSON.stringify(pizzadeals, null, 5))
-    return Api().put(`/pizzadeal/${id}`, pizzadeals,
+  putPizzaDeal (id, pizzadeal) {
+    console.log('REQUESTING ' + pizzadeal._id + ' ' +
+      JSON.stringify(pizzadeal, null, 5))
+    return Api().put(`/pizzadeal/${id}`, pizzadeal,
       { headers: {'Content-type': 'application/json'} })
   }
 

@@ -113,6 +113,8 @@
           },
         methods: {
           submit () {
+            var user = firebase.auth().currentUser;
+            if (user) {
             console.log('submit!')
             this.$v.$touch()
             if (this.$v.$invalid) {
@@ -134,7 +136,9 @@
                 this.$emit('order-is-created-updated', this.pizzas)
               }, 500)
             }
-          },
+          } else{
+            }
+          }
         }
       }
 

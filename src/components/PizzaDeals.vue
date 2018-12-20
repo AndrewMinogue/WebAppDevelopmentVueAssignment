@@ -1,8 +1,8 @@
 <template>
   <div id="app1">
-    <v-client-table :columns="columns" :data="pizzadeals" :options="options">
+    <v-client-table :columns="columns" :data="pizzadeal" :options="options">
       <a slot="upvote" slot-scope="props" class="fa fa-thumbs-up fa-2x VueTables__sortable"  @click="upvotePizzaDeal(props.row._id)"></a>
-      <a slot="edit" slot-scope="props" class="fa fa-edit fa-2x VueTables__sortable" @click="editPizzaDeal(props.row._id)"></a>
+      <a slot="editdeal" slot-scope="props" class="fa fa-edit fa-2x VueTables__sortable" @click="editPizzaDeal(props.row._id)"></a>
       <a slot="remove" slot-scope="props" class="fa fa-trash-o fa-2x VueTables__sortable" @click="deletePizzaDeal(props.row._id)"></a>
     </v-client-table>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 
-  import pizzadeals from '@/services/pizzadeals'
+  import dealpizza from '@/services/dealpizza'
   import Vue from 'vue'
   import VueTables from 'vue-tables-2'
 
@@ -21,10 +21,10 @@
     data () {
       return {
         messagetitle: ' List of Pizzas ',
-        pizzadeals: [{"deals" : String , "pizza" : String , "price" : Number , "side" : String , "drink" : String ,  "rating": Number }],
+        pizzadeal: [{"deals" : String , "pizza" : String , "side" : String , "drink" : String , "price" : Number  ,  "rating": Number }],
         errors: [],
         props: ['_id'],
-        columns: ['_id', 'deals', 'pizza', 'price','side','drink','rating','upvote','remove','edit'],
+        columns: ['_id', 'deals', 'pizza','side','drink' ,'price','rating','upvote','remove','editdeal'],
         options: {
           sortable: ['upvotes'],
           firtable:[],
@@ -33,8 +33,8 @@
             _id: 'ID',
             deals: 'Deal Name',
             pizza: 'Pizza Type',
-            price: 'Price',
             drink: 'Drink',
+            price: 'Price',
             side: 'Side',
             rating: 'rating',
           }
@@ -47,10 +47,10 @@
     },
     methods: {
       loadPizzaDeals: function () {
-        pizzadeals.fetchPizzaDeals()
+        dealpizza.fetchPizzaDeals()
           .then(response => {
-            this.pizzas = response.data
-            console.log(this.pizzas)
+            this.pizzadeal = response.data
+            console.log(this.pizzadeal)
           })
           .catch(error => {
             this.errors.push(error)
@@ -58,9 +58,8 @@
           })
       },
       upvotePizzaDeal: function (id) {
-        pizzadeals.upvotePizzaDeal(id)
+        dealpizza.upvotePizzaDeal(id)
           .then(response => {
-
             console.log(response)
           })
           .catch(error => {
@@ -70,8 +69,6 @@
       },
 
       deletePizzaDeal: function (id) {
-        var user = firebase.auth().currentUser;
-        if (user) {
           this.$swal({
             title: 'Are you sure?',
             text: 'You can\'t Undo this action',
@@ -84,7 +81,7 @@
           }).then((result) => {
             console.log('SWAL Result : ' + result.value)
             if (result.value === true) {
-              pizzadeals.deletePizzaDeal(id)
+              dealpizza.deletePizzaDeal(id)
                 .then(response => {
                   // JSON responses are automatically parsed.
                   this.message = response.data
@@ -103,13 +100,10 @@
               this.$swal('Cancelled', 'Your Deal lives another day!', 'info')
             }
           })
-        }else{
-
-        }
       },
       editPizzaDeal: function (id) {
         this.$router.params = id
-        this.$router.push('edit')
+        this.$router.push('editdeal')
       }
     }
   }

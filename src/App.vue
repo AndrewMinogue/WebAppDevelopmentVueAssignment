@@ -7,20 +7,24 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav >
           <b-nav-item to="/#"><i class="fa fa-home" style="padding: 5px; color: white;"> Home</i></b-nav-item>
-          <b-nav-item-dropdown text="PizzaOrders" right>
+          <b-nav-item-dropdown  style="color: white;" text="PizzaOrders" right>
             <b-dropdown-item to="/OrderPizza">Order Pizza</b-dropdown-item>
             <b-dropdown-item to="/Pizzas">View All Orders</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="PizzaOrders" right>
+          <b-nav-item-dropdown style="color: white;"  text="PizzaDeals" right>
             <b-dropdown-item to="/MakePizzaDeal">Make Pizza Deal</b-dropdown-item>
             <b-dropdown-item to="/PizzaDeals">View Pizza Deals</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/AboutUs"><i class="fa fa-info" style="padding: 5px; color: white;"> About Us</i></b-nav-item>
-          <b-nav-item to="/ContactUs"><i class="fa fa-comment" style="padding: 5px; color: white;"> Contact Us</i></b-nav-item>
-          <b-nav-item to="/Login"><i class="fa fa-sign-in" style="padding: 5px; color: white;"> Login</i></b-nav-item>
-          <b-nav-item to="/SignUp"><i class="fa fa-sign-out" style="padding: 5px; color: white;" > SignUp</i></b-nav-item>
+          <b-nav-item-dropdown style="color: white;" text="Information" right>
+            <b-dropdown-item to="/AboutUs">About Us</b-dropdown-item>
+            <b-dropdown-item to="/ContactUs">Contact Us</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="User" right>
+            <b-dropdown-item to="/Login">Login</b-dropdown-item>
+            <b-dropdown-item to="/SignUp">Sign Up</b-dropdown-item>
+          </b-nav-item-dropdown>
           <i class="fa fa-pied-piper-alt fa-1x" style="padding: 5px; color: white;"></i>
         </b-navbar-nav>
       </b-collapse>
@@ -33,30 +37,8 @@
   export default {
     data () {
       return {
-        sideNav: false
       }
     },
-    computed: {
-      menuItems () {
-        let menuItems = [
-            {class: 'face', title: 'Sign up', link: '/SignUp'},
-            {class: 'lock_open', title: 'Sign in', link: '/Login'},
-            {class: 'fa fa-info', title: 'About Us', link: '/AboutUs'},
-            {class: 'fa fa-comment', title: 'Contact Us', link: '/ContactUs'},
-        ]
-        if (this.userIsAuthenticated) {
-          menuItems = [
-            {class: 'supervisor_account', title: 'View Meetups', link: '/OrderPizza'},
-            {class: 'room', title: 'Organize Meetup', link: '/Pizzas'},
-            {class: 'person', title: 'Profile', link: '/Mapx'}
-          ]
-        }
-        return menuItems
-      },
-      userIsAuthenticated () {
-        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      }
-    }
   }
 </script>
 
