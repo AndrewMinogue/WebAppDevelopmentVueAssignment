@@ -7,9 +7,14 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav >
           <b-nav-item to="/#"><i class="fa fa-home" style="padding: 5px; color: white;"> Home</i></b-nav-item>
-          <b-nav-item to="/OrderPizza"><i class="fa fa-list" style="padding: 5px; color: white;"> Make Orders</i></b-nav-item>
-          <b-nav-item to="/Pizzas"><i class="fa fa-money" style="padding: 5px; color: white;"> List of Orders</i></b-nav-item>
-          <b-nav-item to="/Map"><i class="fa fa-globe" style="padding: 5px; color: white;"> Map</i></b-nav-item>
+          <b-nav-item-dropdown text="PizzaOrders" right>
+            <b-dropdown-item to="/OrderPizza">Order Pizza</b-dropdown-item>
+            <b-dropdown-item to="/Pizzas">View All Orders</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="PizzaOrders" right>
+            <b-dropdown-item to="/MakePizzaDeal">Make Pizza Deal</b-dropdown-item>
+            <b-dropdown-item to="/PizzaDeals">View Pizza Deals</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/AboutUs"><i class="fa fa-info" style="padding: 5px; color: white;"> About Us</i></b-nav-item>

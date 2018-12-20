@@ -8,7 +8,8 @@ import Pizzas from '@/components/Pizzas'
 import Edit from '@/components/Edit'
 import SignUp from '@/components/SignUp'
 import Login from '@/components/Login'
-
+import MakePizzaDeal from '@/components/MakePizzaDeal'
+import PizzaDeals from '@/components/PizzaDeals'
 
 Vue.use(Router)
 
@@ -54,6 +55,16 @@ export default new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/pizzadeals',
+      name: 'PizzaDeals',
+      component: PizzaDeals
+    },
+    {
+      path: '/makepizzadeal',
+      name: 'MakePizzaDeal',
+      component: MakePizzaDeal
     },
   ]
 })
