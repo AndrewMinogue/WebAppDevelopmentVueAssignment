@@ -24,6 +24,7 @@
           <b-nav-item-dropdown text="User" right>
             <b-dropdown-item to="/Login">Login</b-dropdown-item>
             <b-dropdown-item to="/SignUp">Sign Up</b-dropdown-item>
+            <b-dropdown-item @click="logout"> Logout</b-dropdown-item>
           </b-nav-item-dropdown>
           <i class="fa fa-pied-piper-alt fa-1x" style="padding: 5px; color: white;"></i>
         </b-navbar-nav>
@@ -34,9 +35,16 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+
   export default {
-    data () {
-      return {
+    name:'App',
+    methods: {
+        logout: function () {
+          firebase.auth().signOut().then(() => {
+            this.$swal('Logged Out', 'You have been logged out successfully!', 'success');
+            this.$router.push('login')
+          })
       }
     },
   }

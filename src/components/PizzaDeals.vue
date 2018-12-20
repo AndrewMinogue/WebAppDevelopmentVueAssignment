@@ -11,6 +11,7 @@
 <script>
 
   import dealpizza from '@/services/dealpizza'
+  import * as firebase from 'firebase'
   import Vue from 'vue'
   import VueTables from 'vue-tables-2'
 
@@ -27,7 +28,7 @@
         columns: ['_id', 'deals', 'pizza','side','drink' ,'price','rating','upvote','remove','editdeal'],
         options: {
           sortable: ['upvotes'],
-          firtable:[],
+          filterable:['_id', 'deals', 'pizza','side','drink' ,'price','rating'],
           perPage: 10,
           headings: {
             _id: 'ID',
@@ -58,17 +59,24 @@
           })
       },
       upvotePizzaDeal: function (id) {
-        dealpizza.upvotePizzaDeal(id)
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            this.errors.push(error)
-            console.log(error)
-          })
+        var user = firebase.auth().currentUser;
+        if (user) {
+          dealpizza.upvotePizzaDeal(id)
+            .then(response => {
+              console.log(response)
+            })
+            .catch(error => {
+              this.errors.push(error)
+              console.log(error)
+            })
+        }else{
+            this.$swal('Whoops', 'Your not logged in!', 'info')
+          }
       },
 
       deletePizzaDeal: function (id) {
+        var user = firebase.auth().currentUser;
+        if (user) {
           this.$swal({
             title: 'Are you sure?',
             text: 'You can\'t Undo this action',
@@ -100,10 +108,19 @@
               this.$swal('Cancelled', 'Your Deal lives another day!', 'info')
             }
           })
+        }else{
+          this.$swal('Whoops', 'Your not logged in!', 'info')
+        }
       },
       editPizzaDeal: function (id) {
-        this.$router.params = id
-        this.$router.push('editdeal')
+        var user = firebase.auth().currentUser;
+        if (user) {
+          this.$router.params = id
+          this.$router.push('editdeal')
+        }
+        else{
+          this.$swal('Whoops', 'Your not logged in!', 'info')
+        }
       }
     }
   }

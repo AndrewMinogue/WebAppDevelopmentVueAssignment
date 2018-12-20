@@ -158,7 +158,7 @@
             }, 500)
           }
         }else{
-          'You need to be logged in to complete this action'
+          this.$swal('Whoops', 'Your not logged In!', 'info')
         }
       },
       submitPizzaDeal: function (pizzadeal) {

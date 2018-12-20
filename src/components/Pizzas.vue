@@ -13,6 +13,7 @@
   import listpizzas from '@/services/listpizzas'
   import Vue from 'vue'
   import VueTables from 'vue-tables-2'
+  import * as firebase from 'firebase'
 
   Vue.use(VueTables.ClientTable, {compileTemplates: true, filterByColumn: true})
 
@@ -27,7 +28,7 @@
         columns: ['_id', 'paymenttype', 'deal', 'price','discountcode','rating','upvote','remove','edit'],
         options: {
           sortable: ['upvotes'],
-          firtable:[],
+          filterable:['_id', 'paymenttype', 'deal', 'price','discountcode','rating'],
           perPage: 10,
           headings: {
             _id: 'ID',
@@ -56,15 +57,20 @@
           })
       },
       upvote: function (id) {
-        listpizzas.upvoteOrder(id)
-          .then(response => {
+        var user = firebase.auth().currentUser;
+        if (user) {
+          listpizzas.upvoteOrder(id)
+            .then(response => {
 
-            console.log(response)
-          })
-          .catch(error => {
-            this.errors.push(error)
-            console.log(error)
-          })
+              console.log(response)
+            })
+            .catch(error => {
+              this.errors.push(error)
+              console.log(error)
+            })
+        }else{
+          this.$swal('Whoops', 'Your not logged in!', 'info')
+        }
       },
 
       deleteOrder: function (id) {
@@ -97,17 +103,20 @@
                   this.errors.push(error)
                   console.log(error)
                 })
-            } else {
-              this.$swal('Cancelled', 'Your Pizza lives another day!', 'info')
             }
           })
         }else{
-
+            this.$swal('Whoops', 'Your not logged in', 'info')
         }
       },
       editOrder: function (id) {
-        this.$router.params = id
-        this.$router.push('edit')
+        var user = firebase.auth().currentUser;
+        if (user) {
+          this.$router.params = id
+          this.$router.push('edit')
+        }else{
+          this.$swal('Whoops', 'Your not logged in!', 'info')
+        }
       }
     }
   }
